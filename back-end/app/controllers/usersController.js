@@ -37,6 +37,14 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.get('/', (req, res) => {
+    con.query(`SELECT * FROM users`, function (err, result) {
+        if (err) throw err;
+        console.log('user fetched::',result);
+        res.send({message: 'All users found!', result: result});
+    });
+});
+
 
 module.exports = {
     usersController: router
