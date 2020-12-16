@@ -1,12 +1,16 @@
-var mysql = require('mysql');
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const sql = require('./config/db');
+const port = 3000;
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password"
-});
+const { routes } = require('./config/routes');
 
-con.connect(function(err) {
-  if (err) throw err;
-  console.log("Connected!");
+app.use(express.json());
+app.use(cors());
+
+app.use('/', routes);
+
+app.listen(port, () => {
+    console.log('listening on port', port);
 });
