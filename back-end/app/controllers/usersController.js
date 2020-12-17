@@ -7,19 +7,11 @@ const { createUserTable } = require('../models/users-table');
 
 router.post('/', (req, res) => {
     createUserTable();
-    let { first_name, last_name, ph_num, role } = req.body;
-    let id = generateID();
-    console.log('id created', id);
+    let { first_name, last_name, ph_num, role, event_id } = req.body;
     let created_at = new Date().toISOString().slice(0, 19).replace('T', ' ');;
     ph_num = new Number(ph_num);
-    const insertQuery = `INSERT INTO users (
-        ${users_db_keys.id},
-        ${users_db_keys.first_name},
-        ${users_db_keys.last_name},
-        ${users_db_keys.role},
-        ${users_db_keys.ph_num},
-        ${users_db_keys.created_at}
-    ) VALUES (${id},"${first_name}","${last_name}","${role}","${ph_num}","${created_at}")`;
+    const insertQuery = `INSERT INTO users (${users_db_keys.first_name},${users_db_keys.last_name},${users_db_keys.role},${users_db_keys.ph_num},${users_db_keys.id},${users_db_keys.created_at}
+    ) VALUES ("${first_name}","${last_name}","${role}","${ph_num}","${event_id}","${created_at}")`;
     con.query(insertQuery, function (err, result) {
         console.log('error in user creation', err);
         if (err) throw err;

@@ -5,11 +5,12 @@ function createUserTable(){
         if (err) throw err;
         var sql = `  
         CREATE TABLE IF NOT EXISTS users 
-          (id VARCHAR(255) NOT NULL PRIMARY KEY, 
+        (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
           first_name VARCHAR(255), 
           last_name VARCHAR(255), 
           role VARCHAR(255), 
-          ph_num INT(10),
+          ph_num INT,
+          FOREIGN KEY (id) REFERENCES events(id),
           created_at TIMESTAMP);
         `
         con.query(sql, function (err, result) {
