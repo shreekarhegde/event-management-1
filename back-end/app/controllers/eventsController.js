@@ -2,14 +2,15 @@ const express = require("express");
 const { events_db_keys } = require("../constants/db-keys");
 const router = express.Router();
 const { con } = require("../../config/db");
-const { createEventsTable } = require("../models/event-table");
 
 router.post("/", (req, res) => {
-  createEventsTable();
-  let { name, venueID, starts_at, ends_at, userID } = req.body;
+  let { name, venueID, starts_at, ends_at, userID, paymentID, role } = req.body;
+  if (role === "student" && !paymentID) {
+    res.send({ error: "Please complete payment before registration." });
+    return;
+  }
   starts_at = new Date(starts_at).toISOString().slice(0, 19).replace("T", " ");
   ends_at = new Date(ends_at).toISOString().slice(0, 19).replace("T", " ");
-  console.log("");
   const insertQuery = `INSERT INTO events (
         ${events_db_keys.name},
         ${events_db_keys.venueID},
