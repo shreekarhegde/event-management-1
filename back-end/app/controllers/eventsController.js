@@ -6,15 +6,17 @@ const { createEventsTable } = require("../models/event-table");
 
 router.post("/", (req, res) => {
   createEventsTable();
-  let { name, venueID, starts_at, ends_at } = req.body;
+  let { name, venueID, starts_at, ends_at, userID } = req.body;
   starts_at = new Date(starts_at).toISOString().slice(0, 19).replace("T", " ");
   ends_at = new Date(ends_at).toISOString().slice(0, 19).replace("T", " ");
+  console.log("");
   const insertQuery = `INSERT INTO events (
         ${events_db_keys.name},
         ${events_db_keys.venueID},
+        ${events_db_keys.userID},
         ${events_db_keys.starts_at},
         ${events_db_keys.ends_at}
-    ) VALUES ("${name}","${venueID}","${starts_at}","${ends_at}")`;
+    ) VALUES ("${name}","${venueID}","${userID}","${starts_at}","${ends_at}")`;
 
   con.query(insertQuery, function (err, result) {
     console.log("error in events creation", err);

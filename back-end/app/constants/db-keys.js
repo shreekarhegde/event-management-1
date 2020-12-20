@@ -15,6 +15,7 @@ const events = {
   venueID: "venueID",
   eventID: "eventID",
   created_at: "created_at",
+  userID: "userID",
 };
 
 const venue = {
