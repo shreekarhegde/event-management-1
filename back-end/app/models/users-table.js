@@ -10,7 +10,6 @@ function createUserTable() {
           last_name VARCHAR(255), 
           role VARCHAR(255), 
           ph_num INT,
-          FOREIGN KEY (eventID) REFERENCES events(eventID),
           created_at TIMESTAMP);
         `;
     con.query(sql, function (err, result) {
