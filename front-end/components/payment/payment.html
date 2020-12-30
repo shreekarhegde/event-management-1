@@ -12,11 +12,37 @@
 
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script>
+		function parseURLParams() {
+			url = document.location.href;
+			console.log('url: parse url params', url);
+			var queryStart = url.indexOf("?") + 1,
+				queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+				query = url.slice(queryStart, queryEnd - 1),
+				pairs = query.replace(/\+/g, " ").split("&"),
+				parms = {}, i, n, v, nv;
+
+			if (query === url || query === "") return;
+
+			for (i = 0; i < pairs.length; i++) {
+				nv = pairs[i].split("=", 2);
+				n = decodeURIComponent(nv[0]);
+				v = decodeURIComponent(nv[1]);
+
+				if (!parms.hasOwnProperty(n)) parms[n] = [];
+				parms[n].push(nv.length === 2 ? v : null);
+			}
+			console.log('params', parms);
+			document.getElementById('totalAmt').innerHTML = parms['totalAmt'];
+			return parms;
+		}
+	</script>
 </head>
-<body>
+<body onload="parseURLParams()">
 	<div class="container">
+		<h2 style="height: 55px" class="bg-primary text-center"> <p style="padding: 10px;">Complete payment and register.</p> </h2>
 		<div style="margin-top: 100px;" class="row">
-			<div class="col-md-4"></div>
+			<div style="margin-top: 30px;" class="col-md-4 mt-4"></div>
 			<div class="col-xs-12 col-md-4">
 				<div class="panel panel-default">
 					<div class="panel-heading">
@@ -59,11 +85,12 @@
 					</div>
 				</div>
 				<ul class="nav nav-pills nav-stacked">
-					<li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span>4200</span> Final Payment</a>
+					<li class="active"><a href="#"><span class="badge pull-right"><span class="glyphicon glyphicon-usd"></span>
+						<span id="totalAmt"></span></span> Final Payment</a>
 					</li>
 				</ul>
 				<br/>
-				<a href="http://www.jquery2dotnet.com" class="btn btn-success btn-lg btn-block" role="button">Pay</a>
+				<a href='file:///Users/shreekar/Sites/projects/learning/event-management-1/front-end/OnePage/index.html?payment=success' class="btn btn-success btn-lg btn-block" role="button">Pay</a>
 			</div>
 			<div class="col-md-4"></div>
 		</div>

@@ -8,12 +8,11 @@ function formSubmit(){
 	var url = 'http://localhost:3000/users';
 	http.open('POST', url, true);
 
-	//Send the proper header information along with the request
 	http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
-	http.onreadystatechange = function() {//Call a function when the state changes.
+	http.onreadystatechange = function() {
 		if(http.readyState == 4 && http.status == 200) {
-			alert(http.responseText);
+			document.location.href = 'file:///Users/shreekar/Sites/projects/learning/event-management-1/front-end/OnePage/index.html'
 		}
 	}
 	http.send(`first_name=${fname}&last_name=${lname}&ph_num=${ph_num}&role=${role}`);

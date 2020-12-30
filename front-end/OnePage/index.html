@@ -36,7 +36,7 @@
   ======================================================== -->
 </head>
 
-<body>
+<body onload="checkSuccess()">
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
@@ -62,6 +62,8 @@
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+      <span id="success">
+      </span>
       <div class="row justify-content-center">
         <div class="col-xl-7 col-lg-9 text-center">
           <h1>Event Management</h1>
@@ -294,7 +296,7 @@
                   <p> Rs. <span id="totalAmt">0</span></p>
                 </h4>
               </div>
-              <div class="php-email-form text-center"><button type="submit">Proceed to Payment</button></div>
+              <div class="php-email-form text-center"><button class="get-started-btn" onclick="onSubmit(event)">Proceed to Payment</button></div>
             </form>
           </div>
         </div>
