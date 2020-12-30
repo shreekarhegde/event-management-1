@@ -4,20 +4,19 @@ const router = express.Router();
 const { con } = require("../../config/db");
 
 router.post("/", (req, res) => {
-  let { name, venueID, starts_at, ends_at, userID, paymentID, role } = req.body;
+  console.log('req body--->', req.body)
+  let { eventName, venueID, starts_at, ends_at, userID, paymentID, role } = req.body;
   if (role === "student" && !paymentID) {
     res.send({ error: "Please complete payment before registration." });
     return;
   }
-  starts_at = new Date(starts_at).toISOString().slice(0, 19).replace("T", " ");
-  ends_at = new Date(ends_at).toISOString().slice(0, 19).replace("T", " ");
   const insertQuery = `INSERT INTO events (
-        ${events_db_keys.name},
+        ${events_db_keys.eventName},
         ${events_db_keys.venueID},
         ${events_db_keys.userID},
         ${events_db_keys.starts_at},
         ${events_db_keys.ends_at}
-    ) VALUES ("${name}","${venueID}","${userID}","${starts_at}","${ends_at}")`;
+    ) VALUES ("${eventName}","${venueID}","${userID}","${starts_at}","${ends_at}")`;
 
   con.query(insertQuery, function (err, result) {
     console.log("error in events creation", err);

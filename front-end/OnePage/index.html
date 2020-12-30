@@ -36,7 +36,7 @@
   ======================================================== -->
 </head>
 
-<body onload="checkSuccess()">
+<body onload="checkSuccess(), constructEventsTable()">
 
   <!-- ======= Header ======= -->
   <header id="header" class="fixed-top">
@@ -49,6 +49,7 @@
       <nav class="nav-menu d-none d-lg-block">
         <ul>
           <li class="active"><a href="index.html">Home</a></li>
+          <li><a href="#myEvents">My Events</a></li>
           <li><a href="#about">About Us</a></li>
 
         </ul>
@@ -71,7 +72,7 @@
         </div>
       </div>
       <div class="text-center">
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
+        <a href="#contact" class="btn-get-started scrollto">Get Started</a>
       </div>
 
       <div class="row icon-boxes d-flex justify-content-around">
@@ -304,7 +305,19 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
-   <!-- ======= About Section ======= -->
+  <!-- ======= About Section ======= -->
+  <section id="myEvents" class="myEvents">
+    <div class="container" data-aos="fade-up">
+      <div class="section-title">
+        <h2>My Events</h2>
+      </div>
+      <div class="row content d-flex justify-content-center">
+        <table style="border: 1px solid black" id="usersTable">
+        </table>
+      </div>
+    </div>
+  </section>
+   <!-- ======= table Section ======= -->
    <section id="about" class="about">
     <div class="container" data-aos="fade-up">
 
@@ -335,7 +348,7 @@
       </div>
 
     </div>
-  </section><!-- End About Section -->
+  </section>
 
   <a href="#" class="back-to-top"><i class="ri-arrow-up-line"></i></a>
   <div id="preloader"></div>

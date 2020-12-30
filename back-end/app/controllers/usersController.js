@@ -20,6 +20,14 @@ router.post("/", (req, res) => {
   });
 });
 
+router.get("/latest", (req, res) => {
+  con.query(`SELECT * FROM users`, function (err, result) {
+    if (err) throw err;
+    console.log("user fetched::", result);
+    res.send({ message: "latest user!", result: result[result.length - 1] });
+  });
+})
+
 router.get("/:id", (req, res) => {
   let id = req.params.id;
   con.query(
@@ -43,8 +51,9 @@ router.get("/", (req, res) => {
 router.get("/:id/events", (req, res) => {
   let userID = req.params.id;
   con.query(
-    `SELECT * FROM users
-        join events on events.userID = ${userID};`,
+    `SELECT * FROM events 
+      join venue on events.venueID = venue.venueID
+      inner join payment on payment.userID = ${userID} and payment.eventID = events.eventID`,
     function (err, result) {
       if (err) throw err;
       console.log("user fetched::", result);

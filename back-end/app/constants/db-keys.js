@@ -9,7 +9,7 @@ const users = {
 };
 
 const events = {
-  name: "name",
+  eventName: "eventName",
   starts_at: "starts_at",
   ends_at: "ends_at",
   venueID: "venueID",
