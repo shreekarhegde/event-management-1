@@ -18,7 +18,7 @@ function onSubmit(e){
 	let events = [];
 	let loc = document.location.href;
 	console.log('user string extracted', loc.substring(loc.indexOf('=') + 1, loc.length + 1));
-	let userID = loc.substring(loc.indexOf('=') + 1, loc.length + 1);
+	let userID = parseURLParams()['userID'];
 	console.log('userID: onSubmit', userID);
 	document.getElementById('quiz').checked ? events.push({name: 'Quiz', starts: '2021-01-01 01:30', ends: '2021-01-01 02:00'}): '';
 	document.getElementById('coding').checked ? events.push({name: 'Coding', starts: '2021-01-01 01:30', ends: '2021-01-01 02:00'}): '';
@@ -37,7 +37,8 @@ function onSubmit(e){
 			userID: userID,
 			starts_at: event.starts,
 			ends_at: event.ends,
-			venueID: 1
+			venueID: 1,
+			created_at: getCurrentDate()
 		}
 		console.log('event data', eventObj.eventName, eventObj.userID, eventObj.starts_at, eventObj.ends_at);
 		var http = new XMLHttpRequest();
@@ -51,10 +52,10 @@ function onSubmit(e){
 				document.location.href = 'file:///Users/shreekar/Sites/projects/learning/event-management-1/front-end/OnePage/index.html'
 			}
 		}
-		http.send(`eventName=${eventObj.eventName}&userID=${eventObj.userID}&starts_at=${eventObj.starts_at}&ends_at=${eventObj.ends_at}&venueID=${eventObj.venueID}`);
+		http.send(`eventName=${eventObj.eventName}&userID=${eventObj.userID}&starts_at=${eventObj.starts_at}&ends_at=${eventObj.ends_at}&venueID=${eventObj.venueID}&created_at=${eventObj.created_at}`);
 	})
 		
-	document.location.href = `/Users/shreekar/Sites/projects/learning/event-management-1/front-end/components/payment/payment.html?totalAmt=${totalAmt}`;
+	document.location.href = `/Users/shreekar/Sites/projects/learning/event-management-1/front-end/components/payment/payment.html?totalAmt=${totalAmt}&userID=${userID}`;
 }
 
 function checkSuccess(){
@@ -130,4 +131,40 @@ function constructEventsTable(){
 	});
 
 	$("#usersTable").append(tableBody);
+}
+
+function getCurrentDate(){
+	var date = new Date();
+	var dateStr =
+	   date.getFullYear() + "-" +
+	  ("00" + (date.getMonth() + 1)).slice(-2) + "-" +
+	  ("00" + date.getDate()).slice(-2)
+	  + " " +
+	  ("00" + date.getHours()).slice(-2) + ":" +
+	  ("00" + date.getMinutes()).slice(-2) + ":" +
+	  ("00" + date.getSeconds()).slice(-2);
+	return dateStr;
+}
+
+function parseURLParams() {
+	url = document.location.href;
+	console.log('url: parse url params', url);
+	var queryStart = url.indexOf("?") + 1,
+		queryEnd   = url.indexOf("#") + 1 || url.length + 1,
+		query = url.slice(queryStart, queryEnd - 1),
+		pairs = query.replace(/\+/g, " ").split("&"),
+		parms = {}, i, n, v, nv;
+
+	if (query === url || query === "") return;
+
+	for (i = 0; i < pairs.length; i++) {
+		nv = pairs[i].split("=", 2);
+		n = decodeURIComponent(nv[0]);
+		v = decodeURIComponent(nv[1]);
+
+		if (!parms.hasOwnProperty(n)) parms[n] = [];
+		parms[n].push(nv.length === 2 ? v : null);
+	}
+	console.log('params', parms);
+	return parms;
 }

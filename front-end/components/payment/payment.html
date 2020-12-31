@@ -12,6 +12,7 @@
 
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<script src="./payment.js"></script>
 	<script>
 		function parseURLParams() {
 			url = document.location.href;
@@ -90,7 +91,7 @@
 					</li>
 				</ul>
 				<br/>
-				<a href='file:///Users/shreekar/Sites/projects/learning/event-management-1/front-end/OnePage/index.html?payment=success' class="btn btn-success btn-lg btn-block" role="button">Pay</a>
+				<a  onclick="pay()" class="btn btn-success btn-lg btn-block" role="button">Pay</a>
 			</div>
 			<div class="col-md-4"></div>
 		</div>
