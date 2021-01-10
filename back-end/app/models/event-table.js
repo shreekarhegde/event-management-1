@@ -6,12 +6,15 @@ function createEventsTable() {
   con.getConnection(function (err) {
     if (err) throw err;
     var sql = `CREATE TABLE IF NOT EXISTS events 
-        (${events_db_keys.name} VARCHAR(255), 
-        ${events_db_keys.eventID} int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        FOREIGN KEY (${events_db_keys.userID}) REFERENCES users(${events_db_keys.userID}),
-        FOREIGN KEY (${venue_db_keys.venueID}) REFERENCES venue(${venue_db_keys.venueID}),
-        ${events_db_keys.starts_at} TIMESTAMP, 
-        ${events_db_keys.ends_at} TIMESTAMP)`;
+      (eventName VARCHAR(255), 
+      eventID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      userID int,
+      venueID int,
+      FOREIGN KEY (userID) REFERENCES users(userID),
+      FOREIGN KEY (venueID) REFERENCES venue(venueID),
+      starts_at TIMESTAMP, 
+      ends_at TIMESTAMP,
+      created_at TIMESTAMP)`;
     con.query(sql, function (err, result) {
       console.log("event table created", result);
       if (err) throw err;
