@@ -1,0 +1,11 @@
+create venue
+create user
+create event
+create payment (dynamic calculation of amount)
+dynamic routing
+displaying events of specific user
+
+TODO:
+Admin panel
+logout/login
+role table
