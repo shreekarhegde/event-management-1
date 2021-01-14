@@ -5,15 +5,16 @@ function createEventsTable() {
   console.log("inside createEventsTableFunction");
   con.getConnection(function (err) {
     if (err) throw err;
-    var sql = `(eventName VARCHAR(255), 
-            eventID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-            userID int,
-            venueID int,
-            FOREIGN KEY (userID) REFERENCES users(userID),
-            FOREIGN KEY (venueID) REFERENCES venue(venueID),
-            starts_at TIMESTAMP, 
-            ends_at TIMESTAMP,
-            created_at TIMESTAMP)`;
+    var sql = `CREATE TABLE IF NOT EXISTS events 
+      (eventName VARCHAR(255), 
+      eventID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      userID int,
+      venueID int,
+      FOREIGN KEY (userID) REFERENCES users(userID),
+      FOREIGN KEY (venueID) REFERENCES venue(venueID),
+      starts_at TIMESTAMP, 
+      ends_at TIMESTAMP,
+      created_at TIMESTAMP)`;
     con.query(sql, function (err, result) {
       console.log("event table created", result);
       if (err) throw err;
