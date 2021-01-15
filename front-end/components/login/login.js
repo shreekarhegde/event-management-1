@@ -14,11 +14,16 @@ function loginFormSubmit(e) {
     if (http.readyState == 4 && http.status == 200) {
       console.log(
         "JSON.parse(http.responseText).result",
-        JSON.parse(http.responseText).insertId
+        JSON.parse(http.responseText)
       );
-      let id = JSON.parse(http.responseText).result.insertId;
-      console.log("userID", id);
-      document.location.href = `file:///C:/Users/R%20Soumya/projects/event-management-1/front-end/OnePage/index.html?userID=${id}`;
+      let response = JSON.parse(http.responseText);
+      if (response.status === "success" && response.data.length) {
+        let userID = response.data[0].userID;
+        console.log("userID: login", userID);
+        document.location.href = `file:///C:/Users/R%20Soumya/projects/event-management-1/front-end/OnePage/index.html?userID=${userID}`;
+      } else {
+        console.log("login failed");
+      }
     }
   };
   http.send(`uName=${fname}&password=${password}`);
