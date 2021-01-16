@@ -190,6 +190,7 @@ function constructEventsTable() {
         new Date(userData[i].starts_at).getDay() +
         "-" +
         new Date(userData[i].starts_at).getMonth() +
+        1 +
         "-" +
         new Date(userData[i].starts_at).getFullYear() +
         " " +
@@ -200,6 +201,7 @@ function constructEventsTable() {
         new Date(userData[i].ends_at).getDay() +
         "-" +
         new Date(userData[i].ends_at).getMonth() +
+        1 +
         "-" +
         new Date(userData[i].ends_at).getFullYear() +
         " " +
@@ -221,7 +223,7 @@ function constructEventsTable() {
     if (requiredData[0].hasOwnProperty(prop)) {
       tableBody =
         tableBody +
-        ("<th style=' text-align: left; background-color: #2487ce; color: white; padding: 5px'>" +
+        ("<th style=' text-align: center; background-color: #2487ce; color: white; padding: 5px'>" +
           prop +
           "</th>");
       columns.push(prop);
@@ -240,7 +242,7 @@ function constructEventsTable() {
       // row[cell] gives us the value of that cell.
       tableBody =
         tableBody +
-        "<td style='width: 150px; padding: 5px'>" +
+        "<td style='width: 150px; padding: 5px; text-align: center;'>" +
         row[cell] +
         "</td>";
     });
