@@ -38,6 +38,8 @@ function constructEventsTable() {
         ":" +
         new Date(userData[i].ends_at).getMinutes(),
       Address: userData[i].address,
+      "Address": userData[i].address,
+      "Delete": `<i class='fas fa-trash' onclick='deleteEvent(this.id)' id=${userData[i].eventID}></i>`
     };
     requiredData.push(obj);
   }
@@ -80,4 +82,20 @@ function constructEventsTable() {
   });
 
   $("#eventsTable").append(tableBody);
+}
+
+function deleteEvent(ele){
+  var url = `http://localhost:3000/events/${ele}`;
+  var xhr = new XMLHttpRequest();
+  xhr.open("DELETE", url, true);
+  xhr.onload = function () {
+    var response = JSON.parse(xhr.responseText);
+    if (xhr.readyState == 4 && xhr.status == "200") {
+      console.table(response);
+    } else {
+      console.error(response);
+    }
+  }
+  xhr.send(null);
+  location.reload();
 }

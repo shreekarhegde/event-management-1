@@ -56,6 +56,24 @@ router.get("/", (req, res) => {
   });
 });
 
+router.delete("/:id", (req, res) => {
+  let eventID = req.params.id;
+  console.log('eventID', eventID);
+  con.query(`SET GLOBAL FOREIGN_KEY_CHECKS=${0};`, (err, result) => {
+    console.log('result', result);
+    console.log('err----->', err);
+    con.query(`DELETE FROM events where eventID=${eventID}`, (err, result) => {
+      if(err) {
+        res.send({result: 'fail', data: err, message: 'Failed to delete event'});
+      }else{
+        con.query(`SET GLOBAL foreign_key_checks = 1;`);
+        res.send({result: 'success', data: result, message: 'Deleted successfully'});
+      }
+    })
+  });
+  
+})
+
 
 
 module.exports = {
