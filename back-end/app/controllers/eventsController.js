@@ -4,8 +4,17 @@ const router = express.Router();
 const { con } = require("../../config/db");
 
 router.post("/", (req, res) => {
-  console.log('req body--->', req.body)
-  let { eventName, venueID, starts_at, ends_at, userID, paymentID, role, created_at } = req.body;
+  console.log("req body--->", req.body);
+  let {
+    eventName,
+    venueID,
+    starts_at,
+    ends_at,
+    userID,
+    paymentID,
+    role,
+    created_at,
+  } = req.body;
   if (role === "student" && !paymentID) {
     res.send({ error: "Please complete payment before registration." });
     return;
@@ -21,29 +30,40 @@ router.post("/", (req, res) => {
 
   con.query(insertQuery, function (err, result) {
     console.log("error in events creation", err);
-    if (err) throw err;
+    if (err) {
+      res.send({ message: "failed", result: err });
+    } else {
+      res.send({ message: "Created event", result: result });
+    }
     console.log("event created::", result);
-    res.send({ message: "Created event", result: result });
   });
 });
 
-router.get('/latest', (req, res) => {
-  con.query(`SELECT * FROM events
-    WHERE DATE_ADD(created_at, INTERVAL 10 second) >= NOW();`, function (err, result) {
-    if (err) throw err;
-    console.log("events fetched::--->", result);
-    res.send({ message: "Latest events", result: result });
-  });
-})
+router.get("/latest", (req, res) => {
+  con.query(
+    `SELECT * FROM events
+    WHERE DATE_ADD(created_at, INTERVAL 10 second) >= NOW();`,
+    function (err, result) {
+      if (err) {
+        res.send({ result: "fail", data: err });
+      }
+      console.log("events fetched::--->", result);
+      res.send({ message: "Latest events", result: result });
+    }
+  );
+});
 
 router.get("/:id", (req, res) => {
   let eventID = req.params.id;
   con.query(
     `SELECT * FROM events WHERE ${events_db_keys.eventID} = ${eventID}`,
     function (err, result) {
-      if (err) throw err;
-      console.log("event fetched::", result);
-      res.send({ message: "Found event", result: result });
+      if (err) {
+        res.send({ result: "failed", data: err });
+      } else {
+        console.log("event fetched::", result);
+        res.send({ message: "Found event", result: result });
+      }
     }
   );
 });
@@ -58,23 +78,28 @@ router.get("/", (req, res) => {
 
 router.delete("/:id", (req, res) => {
   let eventID = req.params.id;
-  console.log('eventID', eventID);
+  console.log("eventID", eventID);
   con.query(`SET GLOBAL FOREIGN_KEY_CHECKS=${0};`, (err, result) => {
-    console.log('result', result);
-    console.log('err----->', err);
+    console.log("result", result);
+    console.log("err----->", err);
     con.query(`DELETE FROM events where eventID=${eventID}`, (err, result) => {
-      if(err) {
-        res.send({result: 'fail', data: err, message: 'Failed to delete event'});
-      }else{
+      if (err) {
+        res.send({
+          result: "fail",
+          data: err,
+          message: "Failed to delete event",
+        });
+      } else {
         con.query(`SET GLOBAL foreign_key_checks = 1;`);
-        res.send({result: 'success', data: result, message: 'Deleted successfully'});
+        res.send({
+          result: "success",
+          data: result,
+          message: "Deleted successfully",
+        });
       }
-    })
+    });
   });
-  
-})
-
-
+});
 
 module.exports = {
   eventsController: router,
