@@ -4,7 +4,14 @@ function formSubmit(e) {
   let fname = document.getElementById("fName").value;
   let lname = document.getElementById("lName").value;
   let ph_num = document.getElementById("ph_num").value;
-  let role = document.getElementById("role").value;
+  let temprole = document.getElementsByName("role");
+  let role = temprole[0].checked ? temprole[0].value : temprole[1].value;
+  console.log("role", role);
+  console.log("role[0]", role[0].value);
+  console.log("role[1]", role[1].value);
+  console.log("role[0]", role[0].checked);
+  console.log("role[0]", role[1].checked);
+
   var http = new XMLHttpRequest();
   var url = "http://localhost:3000/users";
   http.open("POST", url, true);

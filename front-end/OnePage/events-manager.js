@@ -139,8 +139,9 @@ function onSubmit(e) {
 
     http.onreadystatechange = function () {
       if (http.readyState == 4 && http.status == 200) {
-        document.location.href =
-          "file:///C:/Users/R%20Soumya/projects/event-management-1/front-end/OnePage/index.html";
+        console.log("navigating to payment page");
+        // document.location.href =
+        //   "file:///C:/Users/R%20Soumya/projects/event-management-1/front-end/OnePage/index.html";
       }
     };
     http.send(
@@ -208,8 +209,8 @@ function constructEventsTable() {
         new Date(userData[i].ends_at).getHours() +
         ":" +
         new Date(userData[i].ends_at).getMinutes(),
-      "Address": userData[i].address,
-      "Delete": `<i class='fas fa-trash' onclick='deleteEvent(this.id)' id=${userData[i].eventID}></i>`
+      Address: userData[i].address,
+      Delete: `<i class='fas fa-trash' onclick='deleteEvent(this.id)' id=${userData[i].eventID}></i>`,
     };
     requiredData.push(obj);
   }
@@ -298,18 +299,19 @@ function parseURLParams() {
   return parms;
 }
 
-function deleteEvent(ele){
+function deleteEvent(ele) {
   var url = `http://localhost:3000/events/${ele}`;
   var xhr = new XMLHttpRequest();
   xhr.open("DELETE", url, true);
   xhr.onload = function () {
     var response = JSON.parse(xhr.responseText);
+    console.log("delete response", response);
     if (xhr.readyState == 4 && xhr.status == "200") {
       console.table(response);
     } else {
       console.error(response);
     }
-  }
+  };
   xhr.send(null);
   location.reload();
 }
