@@ -8,10 +8,12 @@
 
     <title>Document</title>
 </head>
-<body onload="constructEventsTable()">
+<body onload="getUser(), constructEventsTable()">
    <a class="btn btn-primary float-right"  href="file:///C:/Users/R%20Soumya/projects/event-management-1/front-end/components/login/login.html">Logout</a>
     <section  id="admin" style="display: flex; justify-content: center;">
         <div class="container" data-aos="fade-up">
+          <div class="d-flex">Name: <h3 id="dispName"></h3></div>
+          <span class="d-flex justify-content-center"> <span> Role: <h3>Admin</h3></span></span>
           <div class="section-title">
             <h2>All Events</h2>
           </div>

@@ -13,6 +13,7 @@ function constructEventsTable() {
   let requiredData = [];
   for (let i = 0; i < userData.length; i++) {
     let obj = {
+      Name: userData[i].first_name + " " + userData[i].last_name,
       "Event Name": userData[i].eventName,
       Venue: userData[i].name,
       "Starts At":
@@ -38,8 +39,8 @@ function constructEventsTable() {
         ":" +
         new Date(userData[i].ends_at).getMinutes(),
       Address: userData[i].address,
-      "Address": userData[i].address,
-      "Delete": `<i class='fas fa-trash' onclick='deleteEvent(this.id)' id=${userData[i].eventID}></i>`
+      Address: userData[i].address,
+      Delete: `<i class='fas fa-trash' onclick='deleteEvent(this.id)' id=${userData[i].eventID}></i>`,
     };
     requiredData.push(obj);
   }
@@ -84,7 +85,7 @@ function constructEventsTable() {
   $("#eventsTable").append(tableBody);
 }
 
-function deleteEvent(ele){
+function deleteEvent(ele) {
   var url = `http://localhost:3000/events/${ele}`;
   var xhr = new XMLHttpRequest();
   xhr.open("DELETE", url, true);
@@ -95,7 +96,48 @@ function deleteEvent(ele){
     } else {
       console.error(response);
     }
-  }
+  };
   xhr.send(null);
   location.reload();
+}
+
+function getUser() {
+  let userID = parseURLParams()["userID"];
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open("GET", `http://localhost:3000/users/${userID}`, false); // false for synchronous request
+  xmlHttp.send(null);
+  console.log("getUserdata: user data", JSON.parse(xmlHttp.responseText));
+  let userData = JSON.parse(xmlHttp.responseText).result[0];
+  console.log("userData: admin page", userData);
+  let name = document.createTextNode(
+    userData.first_name + " " + userData.last_name
+  );
+  document.getElementById("dispName").appendChild(name);
+}
+
+function parseURLParams() {
+  url = document.location.href;
+  console.log("url: parse url params", url);
+  var queryStart = url.indexOf("?") + 1,
+    queryEnd = url.indexOf("#") + 1 || url.length + 1,
+    query = url.slice(queryStart, queryEnd - 1),
+    pairs = query.replace(/\+/g, " ").split("&"),
+    parms = {},
+    i,
+    n,
+    v,
+    nv;
+
+  if (query === url || query === "") return;
+
+  for (i = 0; i < pairs.length; i++) {
+    nv = pairs[i].split("=", 2);
+    n = decodeURIComponent(nv[0]);
+    v = decodeURIComponent(nv[1]);
+
+    if (!parms.hasOwnProperty(n)) parms[n] = [];
+    parms[n].push(nv.length === 2 ? v : null);
+  }
+  console.log("params", parms);
+  return parms;
 }

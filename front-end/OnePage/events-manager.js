@@ -171,6 +171,9 @@ function getLatestUser() {
   xmlHttp.send(null);
   console.log("getLatestUser: latest user", JSON.parse(xmlHttp.responseText));
   let userID = JSON.parse(xmlHttp.responseText).result.userID;
+  let userName = JSON.parse(xmlHttp.responseText).result.first_name;
+  document.createTextNode(userName);
+  document.getElementById("userName").append(userName);
   return userID;
 }
 
