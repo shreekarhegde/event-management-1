@@ -5,6 +5,7 @@ const { con } = require("../../config/db");
 router.get("/", (req, res) => {
   let findQuery = `SELECT * FROM events 
   join venue on events.venueID = venue.venueID
+  join users on users.userID = events.userID
   inner join payment on payment.userID = events.userID and payment.eventID = events.eventID`;
   con.query(findQuery, function (err, result) {
     if (err) {
