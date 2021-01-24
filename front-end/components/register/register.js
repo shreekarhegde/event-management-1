@@ -3,6 +3,9 @@ function formSubmit(e) {
   console.log("form submit called");
   let fname = document.getElementById("fName").value;
   let lname = document.getElementById("lName").value;
+  let pw = document.getElementById("password").value;
+  let email = document.getElementById("email").value;
+  let gender = document.getElementById("gender").value;
   let ph_num = document.getElementById("ph_num").value;
   let temprole = document.getElementsByName("role");
   let role = temprole[0].checked ? temprole[0].value : temprole[1].value;
@@ -31,6 +34,6 @@ function formSubmit(e) {
     }
   };
   http.send(
-    `first_name=${fname}&last_name=${lname}&ph_num=${ph_num}&role=${role}`
+    `first_name=${fname}&last_name=${lname}&pw=${password}&ph_num=${ph_num}&role=${role}&email=${email}&gender=${gender}`
   );
 }
